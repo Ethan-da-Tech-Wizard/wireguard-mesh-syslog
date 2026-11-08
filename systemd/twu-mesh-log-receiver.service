@@ -1,17 +1,77 @@
+# ==============================================================================
+# WireGuard Mesh Remote Syslog Receiver - Systemd Service Unit
+# ==============================================================================
+# File: systemd/twu-mesh-log-receiver.service
+# Target Architecture: Linux systemd user service (%h) or unprivileged system unit
+# Security Profile: Strict non-root sandboxing, cgroup v2 resource limits, umask 0077
+# Compliance Benchmark: Lynis LOGG-2154 (Configure remote log host)
+# Author: Tech Wizard <author@users.noreply.invalid>
+# Organization: TWU LLC
+# License: MIT License (c) 2026 Tech Wizard, TWU LLC
+# ==============================================================================
+#
+# EDUCATIONAL WALKTHROUGH & HARDENING SPECIFICATION:
+#
+# 1. NON-ROOT EXECUTION PARADIGM:
+#    Running network-facing daemons as root (UID 0) represents an unnecessary
+#    and dangerous privilege risk. By utilizing a systemd user unit (%h home directory
+#    specifier) or dedicated service user, the receiver has zero administrative
+#    capabilities. If an unhandled parser vulnerability were ever discovered,
+#    the attacker cannot modify operating system binaries, kernel modules, or
+#    system configuration files.
+#
+# 2. CGROUP V2 RESOURCE ISOLATION:
+#    To prevent denial-of-service (DoS) conditions where a compromised or misconfigured
+#    edge node floods millions of log entries across the WireGuard mesh, this unit
+#    enforces strict cgroup v2 hardware envelopes:
+#      - CPUQuota=25%: Restricts the daemon to at most 25% of one CPU core, preventing
+#        background syslog ingestion from starving foreground or mission-critical tasks.
+#      - MemoryMax=512M: Enforces a hard memory ceiling. If the Python process leaks
+#        or buffers excessively, systemd immediately invokes the cgroup OOM killer
+#        on the isolated service slice rather than locking up the host machine.
+#      - Nice=19: Gives the process lowest CPU scheduling priority.
+#
+# 3. KERNEL SANDBOXING & ATTACK SURFACE REDUCTION:
+#    - NoNewPrivileges=true: Ensures that neither the service process nor any children
+#      it forks can gain new privileges via setuid/setgid binaries or file capabilities.
+#      Enforced at the Linux kernel level via prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0).
+#    - RestrictRealtime=true: Denies attempts to enable realtime CPU scheduling policies
+#      (SCHED_FIFO, SCHED_RR), which could otherwise lock up single-core or low-thread systems.
+#    - LockPersonality=true: Locks the process personality domain via personality(2),
+#      preventing emulation layers that could alter system call behaviors.
+#    - SystemCallArchitectures=native: Blocks the invocation of legacy or foreign 32-bit
+#      system calls (e.g. x86 32-bit syscalls on x86_64), shrinking kernel exploit surface.
+#    - UMask=0077: Guarantees that any log files created by the receiver are initialized
+#      with strict 0600 octal permissions (read/write by owner only), completely blocking
+#      unauthorized local read access by other unprivileged users.
+#
+# 4. LOG ROTATION VIA SIGHUP:
+#    - ExecReload=/bin/kill -HUP $MAINPID: Dispatches SIGHUP when `systemctl reload`
+#      or `logrotate` runs, instructing the daemon to flush buffers and reopen log
+#      file descriptors atomically without terminating active TCP connections.
+# ==============================================================================
+
 [Unit]
-Description=WireGuard Mesh Remote Syslog Receiver
+Description=WireGuard Mesh Remote Syslog Receiver (Lynis LOGG-2154)
 Documentation=https://github.com/Ethan-da-Tech-Wizard/wireguard-mesh-syslog
 After=network.target
 
 [Service]
 Type=simple
-# Adjust WorkingDirectory if installed in a custom location (e.g., %h/wireguard-mesh-syslog or %h/TWU_LLC)
+
+# Execution Directory & Binary:
+# WorkingDirectory uses %h (user home directory) for portability across nodes.
 WorkingDirectory=%h/wireguard-mesh-syslog
+# -B flag prevents Python from writing __pycache__ bytecode files to the repository.
 ExecStart=/usr/bin/python3 -B scripts/mesh_log_receiver.py
+
+# Signal Handling & Log Rotation:
+# SIGHUP triggers atomic log file descriptor reopening without dropping TCP connections.
+ExecReload=/bin/kill -HUP $MAINPID
 Restart=always
 RestartSec=5
 
-# Resource Constraints & Scheduling:
+# CPU Scheduling & Hardware Resource Containment (cgroup v2):
 Nice=19
 CPUQuota=25%
 MemoryMax=512M

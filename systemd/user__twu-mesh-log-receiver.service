@@ -1,16 +1,32 @@
+# ==============================================================================
+# WireGuard Mesh Remote Syslog Receiver - Workspace Systemd Unit Variant
+# ==============================================================================
+# File: systemd/user__twu-mesh-log-receiver.service
+# Target Architecture: Systemd user service rooted at %h/TWU_LLC
+# Author: Tech Wizard <author@users.noreply.invalid>
+# Organization: TWU LLC
+# License: MIT License (c) 2026 Tech Wizard, TWU LLC
+# ==============================================================================
+
 [Unit]
-Description=TWU WireGuard mesh remote syslog receiver for outside nodes
+Description=TWU WireGuard mesh remote syslog receiver for outside nodes (Lynis LOGG-2154)
+Documentation=https://github.com/Ethan-da-Tech-Wizard/wireguard-mesh-syslog
 After=network.target
 
 [Service]
 Type=simple
 WorkingDirectory=%h/TWU_LLC
 ExecStart=/usr/bin/python3 -B scripts/mesh_log_receiver.py
+ExecReload=/bin/kill -HUP $MAINPID
 Restart=always
 RestartSec=5
+
+# CPU Scheduling & Hardware Resource Containment (cgroup v2):
 Nice=19
 CPUQuota=25%
 MemoryMax=512M
+
+# Linux Kernel Hardening & Security Sandbox:
 NoNewPrivileges=true
 RestrictRealtime=true
 LockPersonality=true
