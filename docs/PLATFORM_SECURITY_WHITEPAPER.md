@@ -3,7 +3,7 @@
 Document Identifier: TWU-SEC-WP-2026-V1  
 Classification: Technical Architecture & Engineering Specification  
 Audience: Systems Architects, Principal Security Engineers, Infrastructure Hiring Managers  
-Author: Ethan (workspace)  
+Author: Tech Wizard <author@users.noreply.invalid>, workspace  
 Last Updated: November 2026  
 
 ---
