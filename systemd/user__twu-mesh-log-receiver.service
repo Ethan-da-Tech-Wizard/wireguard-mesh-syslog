@@ -1,0 +1,21 @@
+[Unit]
+Description=TWU WireGuard mesh remote syslog receiver for outside nodes
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/TWU_LLC
+ExecStart=/usr/bin/python3 -B scripts/mesh_log_receiver.py
+Restart=always
+RestartSec=5
+Nice=19
+CPUQuota=25%
+MemoryMax=512M
+NoNewPrivileges=true
+RestrictRealtime=true
+LockPersonality=true
+SystemCallArchitectures=native
+UMask=0077
+
+[Install]
+WantedBy=default.target

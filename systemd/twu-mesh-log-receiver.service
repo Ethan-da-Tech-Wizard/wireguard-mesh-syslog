@@ -1,0 +1,27 @@
+[Unit]
+Description=WireGuard Mesh Remote Syslog Receiver
+Documentation=https://github.com/Ethan-da-Tech-Wizard/wireguard-mesh-syslog
+After=network.target
+
+[Service]
+Type=simple
+# Adjust WorkingDirectory if installed in a custom location (e.g., %h/wireguard-mesh-syslog or %h/TWU_LLC)
+WorkingDirectory=%h/wireguard-mesh-syslog
+ExecStart=/usr/bin/python3 -B scripts/mesh_log_receiver.py
+Restart=always
+RestartSec=5
+
+# Resource Constraints & Scheduling:
+Nice=19
+CPUQuota=25%
+MemoryMax=512M
+
+# Linux Kernel Hardening & Security Sandbox:
+NoNewPrivileges=true
+RestrictRealtime=true
+LockPersonality=true
+SystemCallArchitectures=native
+UMask=0077
+
+[Install]
+WantedBy=default.target
