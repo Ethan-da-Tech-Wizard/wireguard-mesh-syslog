@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 # ==============================================================================
-# Unit Tests for WireGuard Mesh Remote Syslog Receiver
-# ==============================================================================
-# File: scripts/test_mesh_log_receiver.py
-# Architecture: Zero-dependency, test-driven validation for mesh logging subsystem
-# Scope: Test socket peer filtering, log sanitization, RFC 5424/3164 parsing,
-#        octet counting framing vs non-transparent framing, CIDR subnet matching,
-#        and live TCP loopback ingest
-# Author: Tech Wizard <author@users.noreply.invalid>
-# Organization: workspace
-# License: MIT License (c) 2026 Tech Wizard, workspace
+# Program: scripts/test_mesh_log_receiver.py
+# Programmer: Ethan-da-Tech-Wizard
+# Course: CIS 156 / Advanced Systems
+# Last Modified: November 18, 2026
+# Purpose: Unit and integration test suite for the WireGuard mesh syslog receiver.
+#          Validates socket peer filtering, ANSI sanitization, RFC 5424/3164
+#          protocol parsing, octet counting vs non-transparent framing, CIDR
+#          subnet containment, and live TCP loopback message ingestion.
 # ==============================================================================
 #
 # EDUCATIONAL WALKTHROUGH & TEST DESIGN:

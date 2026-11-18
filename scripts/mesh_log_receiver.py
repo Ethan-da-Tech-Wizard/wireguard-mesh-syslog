@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 # ==============================================================================
-# WireGuard Mesh Remote Syslog Receiver
-# ==============================================================================
-# File: scripts/mesh_log_receiver.py
-# Architecture: Zero-dependency, single-file, event-driven TCP syslog receiver
-# Target Network: Encrypted WireGuard Point-to-Point Mesh Overlay (10.200.0.0/24)
-# Compliance Target: Lynis LOGG-2154 (Configure remote log host)
-# Security Design: Fail-closed, transport-level peer allowlisting, ANSI sanitization
-# Author: Tech Wizard <author@users.noreply.invalid>
-# Organization: workspace
-# License: MIT License (c) 2026 Tech Wizard, workspace
+# Program: scripts/mesh_log_receiver.py
+# Programmer: Ethan-da-Tech-Wizard
+# Course: CIS 156 / Advanced Systems
+# Last Modified: November 18, 2026
+# Purpose: Zero-dependency, event-driven TCP remote syslog receiver daemon binding
+#          strictly to the encrypted WireGuard overlay IP (10.200.0.1:6514).
+#          Provides Lynis LOGG-2154 compliance, transport-level CIDR allowlisting,
+#          RFC 5424/3164 parsing, octet counting and newline framing, ANSI escape
+#          sanitization, and atomic date-partitioned log writing.
 # ==============================================================================
 #
 # EDUCATIONAL WALKTHROUGH & ARCHITECTURAL FOUNDATION:

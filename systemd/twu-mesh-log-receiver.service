@@ -1,13 +1,11 @@
 # ==============================================================================
-# WireGuard Mesh Remote Syslog Receiver - Systemd Service Unit
-# ==============================================================================
-# File: systemd/twu-mesh-log-receiver.service
-# Target Architecture: Linux systemd user service (%h) or unprivileged system unit
-# Security Profile: Strict non-root sandboxing, cgroup v2 resource limits, umask 0077
-# Compliance Benchmark: Lynis LOGG-2154 (Configure remote log host)
-# Author: Tech Wizard <author@users.noreply.invalid>
-# Organization: workspace
-# License: MIT License (c) 2026 Tech Wizard, workspace
+# Program: systemd/twu-mesh-log-receiver.service
+# Programmer: Ethan-da-Tech-Wizard
+# Course: CIS 156 / Advanced Systems
+# Last Modified: November 18, 2026
+# Purpose: Production Linux systemd service unit for unprivileged execution of
+#          the WireGuard remote syslog receiver with strict cgroup v2 resource
+#          envelopes, kernel sandboxing, umask 0077, and SIGHUP reload support.
 # ==============================================================================
 #
 # EDUCATIONAL WALKTHROUGH & HARDENING SPECIFICATION:
