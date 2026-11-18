@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# Program: wireguard-mesh-syslog - mesh_log_receiver.py
+# Programmer: Ethan-da-Tech-Wizard (written with Claude, an AI assistant)
+# Last Modified: 2026-11-18
+# Purpose: Receives syslog over TCP on the WireGuard mesh address, filters peers by allowlist, sanitizes and parses messages, and writes them to per-host log files.
 # ==============================================================================
 # WireGuard Mesh Remote Syslog Receiver
 # ==============================================================================
@@ -121,6 +125,8 @@
 #    achieves full benchmark compliance with zero LAN/WAN exposure.
 # ==============================================================================
 
+"""Receive syslog over TCP on the WireGuard mesh and write it to log files."""
+
 import argparse
 import ipaddress
 import os
@@ -158,6 +164,7 @@ except ImportError:
         """Lightweight standard-library fallback when deployed outside workspace."""
         @staticmethod
         def enforce(service_name: str) -> None:
+            """Do nothing: stand-in for the fleet stop-latch check."""
             # Standalone mode: no central STOP latch file required
             pass
 
@@ -582,6 +589,8 @@ def run_server(bind_ip: str = DEFAULT_MESH_IP, port: int = DEFAULT_MESH_PORT, st
     reload_requested = False
 
     def _sig_term_handler(signum, frame):
+        """SIGTERM/SIGINT handler: flag the main loop so it shuts down cleanly."""
+        # nonlocal lets us change the flag defined in run_server
         nonlocal shutdown_requested
         shutdown_requested = True
 

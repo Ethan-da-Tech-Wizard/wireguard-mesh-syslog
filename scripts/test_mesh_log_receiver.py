@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# Program: wireguard-mesh-syslog - test_mesh_log_receiver.py
+# Programmer: Ethan-da-Tech-Wizard (written with Claude, an AI assistant)
+# Last Modified: 2026-11-18
+# Purpose: Unit and loopback tests for the mesh log receiver: sanitizing, peer filtering, subnet checks, syslog parsing, and both TCP framing styles.
 # ==============================================================================
 # Unit Tests for WireGuard Mesh Remote Syslog Receiver
 # ==============================================================================
@@ -32,6 +36,8 @@
 #    - Framing Ingestion: Validating both traditional non-transparent newline framing
 #      and RFC 6587 Section 3.4.1 octet counting framing.
 # ==============================================================================
+
+"""Unit and loopback tests for mesh_log_receiver."""
 
 import os
 import signal
