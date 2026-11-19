@@ -2,7 +2,6 @@
 # ==============================================================================
 # Program: scripts/mesh_log_receiver.py
 # Programmer: Ethan-da-Tech-Wizard
-# Course: CIS 156 / Advanced Systems
 # Last Modified: November 18, 2026
 # Purpose: Zero-dependency, event-driven TCP remote syslog receiver daemon binding
 #          strictly to the encrypted WireGuard overlay IP (10.200.0.1:6514).

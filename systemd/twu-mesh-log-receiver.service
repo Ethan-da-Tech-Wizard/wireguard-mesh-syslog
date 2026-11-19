@@ -1,7 +1,6 @@
 # ==============================================================================
 # Program: systemd/twu-mesh-log-receiver.service
 # Programmer: Ethan-da-Tech-Wizard
-# Course: CIS 156 / Advanced Systems
 # Last Modified: November 18, 2026
 # Purpose: Production Linux systemd service unit for unprivileged execution of
 #          the WireGuard remote syslog receiver with strict cgroup v2 resource

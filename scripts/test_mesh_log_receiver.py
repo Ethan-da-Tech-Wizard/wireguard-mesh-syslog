@@ -2,7 +2,6 @@
 # ==============================================================================
 # Program: scripts/test_mesh_log_receiver.py
 # Programmer: Ethan-da-Tech-Wizard
-# Course: CIS 156 / Advanced Systems
 # Last Modified: November 18, 2026
 # Purpose: Unit and integration test suite for the WireGuard mesh syslog receiver.
 #          Validates socket peer filtering, ANSI sanitization, RFC 5424/3164
