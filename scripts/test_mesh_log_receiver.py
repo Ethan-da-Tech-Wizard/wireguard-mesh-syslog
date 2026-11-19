@@ -30,6 +30,8 @@
 #      and RFC 6587 Section 3.4.1 octet counting framing.
 # ==============================================================================
 
+"""Tests for the mesh syslog receiver: peer filtering, sanitization, parsing, framing, CIDR checks and loopback ingestion."""
+
 import os
 import signal
 import socket

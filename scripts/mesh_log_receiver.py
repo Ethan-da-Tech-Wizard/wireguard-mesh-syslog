@@ -119,6 +119,8 @@
 #    achieves full benchmark compliance with zero LAN/WAN exposure.
 # ==============================================================================
 
+"""TCP syslog receiver bound to the WireGuard overlay IP; parses RFC 5424/3164, sanitizes input and writes date-partitioned logs."""
+
 import argparse
 import ipaddress
 import os
@@ -580,6 +582,7 @@ def run_server(bind_ip: str = DEFAULT_MESH_IP, port: int = DEFAULT_MESH_PORT, st
     reload_requested = False
 
     def _sig_term_handler(signum, frame):
+        """SIGTERM/SIGINT handler: request a graceful shutdown of the main loop."""
         nonlocal shutdown_requested
         shutdown_requested = True
 
