@@ -157,6 +157,8 @@ except ImportError:
     class _StandaloneStopLatch:
         """Lightweight standard-library fallback when deployed outside workspace."""
         @staticmethod
+        # Same signature as the real latch so call sites need no branches; doing nothing
+        # means the service never self-halts when deployed standalone.
         def enforce(service_name: str) -> None:
             # Standalone mode: no central STOP latch file required
             pass
