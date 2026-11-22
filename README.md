@@ -23,6 +23,25 @@ The script falls back to a no-op stop latch if the workspace-specific `stop_latc
 
 The repository includes [receiver tests](scripts/test_mesh_log_receiver.py), runnable with `python3 -m unittest discover -s scripts`. Results apply to the revision and environment tested.
 
+## Visual Walkthrough & Diagnostics
+
+<p align="center">
+  <img src="docs/assets/mesh_syslog_receiver.svg" alt="WireGuard Mesh Syslog Ingestion" width="860">
+</p>
+
+<p align="center">
+  <img src="docs/assets/mesh_syslog_telemetry.svg" alt="Mesh Syslog Sanitization & Verification" width="860">
+</p>
+
+## Magi Standards & AI Contributor Onboarding
+
+All mesh syslog collectors, frame decoders, and stream filters adhere to the **[Magi Bible: Engineering Foundations & Safety Standards for AI Coding](MAGI_BIBLE.md)** and **[MAGI_LOOK_HERE.md](MAGI_LOOK_HERE.md)**:
+- **[MAGI_LOOK_HERE.md](MAGI_LOOK_HERE.md)**: Universal contributor & AI agent onboarding guide, visual walkthrough requirements, zero-PII validation rules.
+- **[MAGI_BIBLE.md](MAGI_BIBLE.md)**: Core engineering foundations, multi-seat governance, and verification checklists.
+- **Rule 16 Commenting Invariant:** Code contains comprehensive structural headers and inline rationale.
+- **Fail-Closed Security:** Enforces strict CIDR subnet verification (`10.200.0.0/24`) and known peer authorization.
+- **Zero Secrets & Leak-Scrubbed:** Free of private tokens, paths, or personal hostnames.
+
 ## License
 
 [MIT](LICENSE)
